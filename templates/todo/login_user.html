@@ -1,0 +1,43 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="text-center">
+            <br><br>
+            <h2> Only a logged-out users can see this page</h2>
+            <br><br>
+            <h4>You should return to <a href="{% url 'current_todos' %}">current ToDo's</a></h4>
+        </div>
+    {% else %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Login</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" class="form-control" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <hr>
+            <div class="text-center">
+                Need an account? <a href="{% url 'signup_user' %}">Sign Up here</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
